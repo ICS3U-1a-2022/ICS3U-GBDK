@@ -11,20 +11,16 @@
 #include "SpaceAliens.c"
 
 void main() {
-    // load spritesheet reference
+    // load spritesheet referenced as #0
+    // load 16 sprites from it
+    // from variable SpaceAliens
     set_sprite_data(0, 16, SpaceAliens);
 
-    // load sprite
-    set_sprite_tile(0, 1);
-    set_sprite_tile(1, 2);
-    set_sprite_tile(2, 3);
-    set_sprite_tile(3, 4);
-    UBYTE spriteTiles[4] = {0, 1, 2, 3};
+    // load sprites for meta sprite
+    set_meta_sprite_tile(0, 1, 2, 3, 4);
 
-    // create a meta sprite
-    struct MetaSprite ship;
-    setupMetaSprite(&ship, 72, 120, spriteTiles);
-    updateMetaSprite(&ship);
+    // move meta sprite on screen
+    move_meta_sprite(0, 76, 120);
 
     SHOW_SPRITES;
     DISPLAY_ON;

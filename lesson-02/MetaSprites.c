@@ -2,33 +2,39 @@
 //
 // Created by: Mr. Coxall
 // Created on: Sep 2020
-// This is a game Meta Sprite struct and helper functions
+// This is a game Meta Sprite helper functions
 
-#include <stdio.h>
-#include <gb/gb.h>
-
-struct MetaSprite {
-
-    UBYTE spriteIDs[4];
-    UINT8 xPosition;
-    UINT8 yPosition;
-};
-
-void setupMetaSprite(struct MetaSprite* character, UINT8 x, UINT8 y, UBYTE spriteTiles[]){
-    character->xPosition = x;
-    character->yPosition = y;
-
-    character->spriteIDs[0] = spriteTiles[0];
-    character->spriteIDs[1] = spriteTiles[1];
-    character->spriteIDs[2] = spriteTiles[2];
-    character->spriteIDs[3] = spriteTiles[3];
+void set_meta_sprite_tile(UINT8 startMetaSpritePosition,
+                          UINT8 SpriteIndexForPart1,
+                          UINT8 SpriteIndexForPart2,
+                          UINT8 SpriteIndexForPart3,
+                          UINT8 SpriteIndexForPart4) {
+    // same as built in set_sprite_tile
+    //   except it loads 4 sprites to create a Meta sprite
+    set_sprite_tile(startMetaSpritePosition + 0, SpriteIndexForPart1);
+    set_sprite_tile(startMetaSpritePosition + 1, SpriteIndexForPart2);
+    set_sprite_tile(startMetaSpritePosition + 2, SpriteIndexForPart3);
+    set_sprite_tile(startMetaSpritePosition + 3, SpriteIndexForPart4);
 }
 
-void updateMetaSprite(struct MetaSprite* character){
-    UBYTE spriteSize = 8;
+void move_meta_sprite(UINT8 startMetaSpritePosition,
+                      UINT8 xPosition,
+                      UINT8 yPosition) {
+    // same as built in move_sprite
+    //   except it moves the 4 piece Meta sprite
+    move_sprite(startMetaSpritePosition + 0, xPosition + 0, yPosition - 8);
+    move_sprite(startMetaSpritePosition + 1, xPosition + 8, yPosition - 8);
+    move_sprite(startMetaSpritePosition + 2, xPosition + 0, yPosition - 0);
+    move_sprite(startMetaSpritePosition + 3, xPosition + 8, yPosition - 0);
+}
 
-    move_sprite(character->spriteIDs[0], character->xPosition, character->yPosition);
-    move_sprite(character->spriteIDs[1], character->xPosition + spriteSize, character->yPosition);
-    move_sprite(character->spriteIDs[2], character->xPosition, character->yPosition + spriteSize);
-    move_sprite(character->spriteIDs[3], character->xPosition + spriteSize, character->yPosition + spriteSize);
+void scroll_meta_sprite(UINT8 startMetaSpriteIndex,
+                        int xPosition,
+                        int yPosition) {
+    // same as built in scroll_sprite
+    //   except it scrolls the 4 piece Meta sprite
+    scroll_sprite(startMetaSpriteIndex + 0, xPosition, yPosition);
+    scroll_sprite(startMetaSpriteIndex + 1, xPosition, yPosition);
+    scroll_sprite(startMetaSpriteIndex + 2, xPosition, yPosition);
+    scroll_sprite(startMetaSpriteIndex + 3, xPosition, yPosition);
 }
